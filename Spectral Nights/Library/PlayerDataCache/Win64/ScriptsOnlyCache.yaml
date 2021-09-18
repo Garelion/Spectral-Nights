@@ -20,8 +20,10 @@ ScriptsOnlyBuild:
     UnityEditor.Graphs.dll:
     - UnityEditor.Graphs.AnimationBlendTree.Graph
     - UnityEditor.Graphs.AnimationBlendTree.GraphGUI
+    - UnityEditor.Graphs.AnimationStateMachine.AnyStateNode
     - UnityEditor.Graphs.AnimationStateMachine.Graph
     - UnityEditor.Graphs.AnimationStateMachine.GraphGUI
+    - UnityEditor.Graphs.AnimationStateMachine.StateNode
     - UnityEditor.Graphs.AnimatorControllerTool
     UnityEditor.TestRunner.dll:
     - UnityEditor.TestTools.TestRunner.Api.CallbacksHolder
@@ -217,7 +219,7 @@ ScriptsOnlyBuild:
     className: GridLayoutGroup
   - hash:
       serializedVersion: 2
-      Hash: ee7ffceb846e1b2da7cd1a05506407e7
+      Hash: 5286b16b9196c2f3e64852612843dbcf
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: Sensor
@@ -638,4 +640,4 @@ ScriptsOnlyBuild:
   platform: 19
   scenePathNames:
   - Assets/Scenes/Spectral_Demo.unity
-  playerPath: "C:/Users/blaze/OneDrive/Desktop/Spectral_Build2/Spectral_Nights\u200B.exe"
+  playerPath: "C:/Users/keval/OneDrive/Desktop/Spectral Nights/Spectral_Nights\u200B.exe"
