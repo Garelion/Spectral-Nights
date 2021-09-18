@@ -9,6 +9,7 @@ public class Sensor : MonoBehaviour
     
     [SerializeField]
     GameObject Text;
+
     TextMesh T_Mesh;
 
     [SerializeField]
