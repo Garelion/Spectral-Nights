@@ -1,7 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
 public class Ghost_Power : MonoBehaviour
 {
     [SerializeField]
@@ -21,7 +20,7 @@ public class Ghost_Power : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+
     }
 
     // Update is called once per frame
@@ -37,8 +36,9 @@ public class Ghost_Power : MonoBehaviour
             Tier--;
         }
 
-        if (Tier == 0)
+        if (Tier <= 0)
         {
+            Tier = 0;
             Tier1.SetActive(false);
             Tier2.SetActive(false);
             Tier3.SetActive(false);
@@ -71,6 +71,18 @@ public class Ghost_Power : MonoBehaviour
             Tier2.SetActive(true);
             Tier3.SetActive(true);
             Tier4.SetActive(true);
+            Tier = 4;
         }
+    }
+
+    public int DeductPower()
+    {
+        Tier--;
+        return Tier;
+    }
+
+    public int GetTier()
+    {
+        return Tier;
     }
 }
