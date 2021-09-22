@@ -81,6 +81,12 @@ public class Ghost_Power : MonoBehaviour
         return Tier;
     }
 
+    public int AddPower()
+    {
+        Tier++;
+        return Tier;
+    }
+
     public int GetTier()
     {
         return Tier;

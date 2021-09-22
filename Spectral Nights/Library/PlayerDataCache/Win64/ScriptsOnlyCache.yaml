@@ -32,10 +32,10 @@ ScriptsOnlyBuild:
     UnityEngine.UI.dll:
     - UnityEngine.EventSystems.EventSystem
     - UnityEngine.EventSystems.StandaloneInputModule
-    - UnityEngine.UI.AspectRatioFitter
     - UnityEngine.UI.CanvasScaler
     - UnityEngine.UI.GraphicRaycaster
     - UnityEngine.UI.Image
+    - UnityEngine.UI.Text
   sceneClasses:
     Assets/Scenes/Spectral_Demo.unity:
     - Class: 1
@@ -71,11 +71,11 @@ ScriptsOnlyBuild:
     - Class: 114
       Script: {instanceID: 11356}
     - Class: 114
+      Script: {instanceID: 11690}
+    - Class: 114
       Script: {instanceID: 11748}
     - Class: 114
       Script: {instanceID: 11894}
-    - Class: 114
-      Script: {instanceID: 12080}
     - Class: 114
       Script: {instanceID: 12518}
     - Class: 114
@@ -93,6 +93,8 @@ ScriptsOnlyBuild:
     - Class: 114
       Script: {instanceID: 15058}
     - Class: 115
+      Script: {instanceID: 0}
+    - Class: 128
       Script: {instanceID: 0}
     - Class: 157
       Script: {instanceID: 0}
@@ -219,7 +221,7 @@ ScriptsOnlyBuild:
     className: GridLayoutGroup
   - hash:
       serializedVersion: 2
-      Hash: 5286b16b9196c2f3e64852612843dbcf
+      Hash: 1012a7b7c81f6971280f7d2b4bdd80e3
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: Sensor
@@ -519,7 +521,7 @@ ScriptsOnlyBuild:
     className: TMP_StyleSheet
   - hash:
       serializedVersion: 2
-      Hash: 71bb6a6b6c8f052f948db64c7dd3ca4f
+      Hash: ebddbc89c30a9ae138d2ff5fb94fc250
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: NPC_AI
@@ -640,4 +642,4 @@ ScriptsOnlyBuild:
   platform: 19
   scenePathNames:
   - Assets/Scenes/Spectral_Demo.unity
-  playerPath: "C:/Users/keval/OneDrive/Desktop/Spectral Nights/Spectral_Nights\u200B.exe"
+  playerPath: "C:/Users/blaze/OneDrive/Desktop/Spectral_Build2/Spectral_Nights\u200B.exe"

@@ -10,7 +10,16 @@ public class Sensor : MonoBehaviour
     [SerializeField]
     GameObject Text;
 
+    [SerializeField]
+    NPC_AI Ai;
+
     TextMesh T_Mesh;
+
+    [SerializeField]
+    GameObject Win;
+
+    [SerializeField]
+    GameObject Tutorial;
 
     [SerializeField]
     GameObject Door;
@@ -50,9 +59,10 @@ public class Sensor : MonoBehaviour
     GameObject Cup;
     [SerializeField]
     GameObject NoodleBox;
+
+    [SerializeField]
+    GameObject Computer;
     
-
-
     [SerializeField]
     Animator lamp_anim;
     [SerializeField]
@@ -87,6 +97,8 @@ public class Sensor : MonoBehaviour
     bool sinkoff = false;
     bool pizzaopen = false;
     bool pizzaclose = false;
+
+    bool Comp = false;
     //Start is called before the first frame update
     void Start()
     {
@@ -97,161 +109,214 @@ public class Sensor : MonoBehaviour
     //Update is called once per frame
     void Update()
     {
-        if (GP_script.GetTier() > 0)
-       {
-            if (Input.GetKeyDown(KeyCode.E) && door == true)
-            {
-                Door.SetActive(false);
-                Open_Door.SetActive(true);
-                GP_script.DeductPower();
-            }
+        if (Input.GetKeyDown(KeyCode.Escape))
+            Application.Quit();
 
-            if (Input.GetKeyDown(KeyCode.E) && open_door == true)
-            {
-                Open_Door.SetActive(false);
-                Door.SetActive(true);
-                GP_script.DeductPower();
-            }
+        if (Input.GetKeyDown(KeyCode.E) && Comp == true && GP_script.GetTier() > 3)
+        {
+            Win.SetActive(true);
+        }
 
-            if (Input.GetKeyDown(KeyCode.E) && door2 == true)
-            {
-                Door2.SetActive(false);
-                Open_Door2.SetActive(true);
-                GP_script.DeductPower();
-            }
+        if (Input.GetKeyDown(KeyCode.P) && Tutorial.active == true)
+        {
+            Tutorial.SetActive(false);
+        }
+        else if (Input.GetKeyDown(KeyCode.P) && Tutorial.active == false)
+        {
+            Tutorial.SetActive(true);
+        }
 
-            if (Input.GetKeyDown(KeyCode.E) && open_door2 == true)
-            {
-                Open_Door2.SetActive(false);
-                Door2.SetActive(true);
-                GP_script.DeductPower();
-            }
+        if (Input.GetKeyDown(KeyCode.E) && door == true && GP_script.GetTier() > 3)
+        {
+            Door.SetActive(false);
+            Open_Door.SetActive(true);
+        }
 
-            if (Input.GetKeyDown(KeyCode.E) && lamp == true)
+        if (Input.GetKeyDown(KeyCode.E) && open_door == true && GP_script.GetTier() > 3)
+        {
+            Open_Door.SetActive(false);
+            Door.SetActive(true);
+        }
+
+        if (Input.GetKeyDown(KeyCode.E) && door2 == true && GP_script.GetTier() > 3)
+        {
+            Door2.SetActive(false);
+            Open_Door2.SetActive(true);
+        }
+
+        if (Input.GetKeyDown(KeyCode.E) && open_door2 == true && GP_script.GetTier() > 3)
+        {
+            Open_Door2.SetActive(false);
+            Door2.SetActive(true);
+        }
+
+        if (Input.GetKeyDown(KeyCode.E) && lamp == true && GP_script.GetTier() > 2)
+        {
+            if (lamp_anim.GetBool("is_On") == false)
             {
-                if (lamp_anim.GetBool("is_On") == false)
+                lamp_anim.SetBool("is_On", true);
+                Ai.Scared_Count++;
+                if (Ai.Scared_Count >= 9)
                 {
-                    lamp_anim.SetBool("is_On", true);
-                    GP_script.DeductPower();
-                }
-                else
-                {
-                    lamp_anim.SetBool("is_On", false);
-                    GP_script.DeductPower();
-                }
-            }
-
-            if (Input.GetKeyDown(KeyCode.E) && plate == true)
-            {
-                if (plate_anim.GetBool("Rattle") == false)
-                {
-                    //plate_anim.SetBool("Rattle", true);
-                    StartCoroutine(DelayThrow(Plate));
-                }
-
-            }
-
-            if (Input.GetKeyDown(KeyCode.E) && plate2 == true)
-            {
-                if (plate_anim2.GetBool("Rattle") == false)
-                {
-                    //plate_anim2.SetBool("Rattle", true);
-                    StartCoroutine(DelayThrow(Plate2));
+                    Ai.Huddled_Corner();
                 }
             }
-
-            if (Input.GetKeyDown(KeyCode.E) && plate3 == true)
+            else
             {
-                if (plate_anim3.GetBool("Rattle") == false)
-                {
-                    //plate_anim3.SetBool("Rattle", true);
-                    StartCoroutine(DelayThrow(Plate3));
-                }
+                lamp_anim.SetBool("is_On", false);
+            }
+        }
+
+        if (Input.GetKeyDown(KeyCode.E) && plate == true && GP_script.GetTier() >= 0)
+        {
+            plate_anim.SetBool("Rattle", true);
+
+            if (GP_script.GetTier() >= 1)
+            {
+                plate_anim.SetBool("Rattle", true);
+                StartCoroutine(DelayThrow(Plate));
             }
 
-            if (Input.GetKeyDown(KeyCode.E) && plate4 == true)
+            if (Ai.Huh_Count < 3)
             {
-                if (plate_anim4.GetBool("Rattle") == false)
-                {
-                    //plate_anim4.SetBool("Rattle", true);
-                    StartCoroutine(DelayThrow(Plate4));
-                }
+                Ai.Hear_Something();
             }
-            
-            if (Input.GetKeyDown(KeyCode.E) && cup == true)
-            {
-                if (cup_anim.GetBool("Rattle") == false)
-                {
-                    cup_anim.SetBool("Rattle", true);
-                    GP_script.DeductPower();
+        }
 
-                }
+        if (Input.GetKeyDown(KeyCode.E) && plate2 == true && GP_script.GetTier() >= 0)
+        {
+            plate_anim2.SetBool("Rattle", true);
+
+            if (GP_script.GetTier() >= 1)
+            {
+                plate_anim2.SetBool("Rattle", true);
+                StartCoroutine(DelayThrow(Plate2));
             }
 
-            if (Input.GetKeyDown(KeyCode.E) && noodles == true)
+            if (Ai.Huh_Count < 3)
             {
-                if (plate_anim4.GetBool("Rattle") == false)
-                {
-                    noodlebox_anim.SetBool("Rattle", true);
-                    GP_script.DeductPower();
+                Ai.Hear_Something();
+            }
+        }
 
-                }
+        if (Input.GetKeyDown(KeyCode.E) && plate3 == true && GP_script.GetTier() >= 0)
+        {
+            plate_anim3.SetBool("Rattle", true);
+
+            if (GP_script.GetTier() >= 1)
+            {
+                plate_anim3.SetBool("Rattle", true);
+                StartCoroutine(DelayThrow(Plate3));
             }
 
-            if (Input.GetKeyDown(KeyCode.E) && pillow == true)
+            if (Ai.Huh_Count < 3)
             {
-                Pillow.transform.Translate((GameObject.Find("Throw_Target")).transform.localPosition);
-                GP_script.DeductPower();
+                Ai.Hear_Something();
+            }
+        }
+
+        if (Input.GetKeyDown(KeyCode.E) && plate4 == true && GP_script.GetTier() >= 0)
+        {
+            plate_anim4.SetBool("Rattle", true);
+
+            if (GP_script.GetTier() >= 1)
+            {
+                plate_anim4.SetBool("Rattle", true);
+                StartCoroutine(DelayThrow(Plate4));
             }
 
-            if (Input.GetKeyDown(KeyCode.E) && pillow2 == true)
+            if (Ai.Huh_Count < 3)
             {
-                Pillow2.transform.Translate((GameObject.Find("Throw_Target_1")).transform.localPosition);
-                GP_script.DeductPower();
+                Ai.Hear_Something();
+            }
+        }
+
+        if (Input.GetKeyDown(KeyCode.E) && cup == true && GP_script.GetTier() >= 0)
+        {
+            if (cup_anim.GetBool("Rattle") == false)
+            {
+                cup_anim.SetBool("Rattle", true);
+            }
+            if (Ai.Huh_Count < 3)
+            {
+                Ai.Hear_Something();
+            }
+        }
+
+        if (Input.GetKeyDown(KeyCode.E) && noodles == true && GP_script.GetTier() > 1)
+        {
+            if (plate_anim4.GetBool("Rattle") == false)
+            {
+                Ai.Scared_Count++;
+                noodlebox_anim.SetBool("Rattle", true);
             }
 
-            if (Input.GetKeyDown(KeyCode.E) && fridge == true)
+            if (Ai.Scared_Count >= 9)
             {
-                Fridge_Door.SetActive(false);
-                Fridge_Open.SetActive(true);
-                GP_script.DeductPower();
+                Ai.Huddled_Corner();
             }
+        }
 
-            if (Input.GetKeyDown(KeyCode.E) && open_fridge == true)
-            {
-                Fridge_Open.SetActive(false);
-                Fridge_Door.SetActive(true);
-                GP_script.DeductPower();
-            }
+        if (Input.GetKeyDown(KeyCode.E) && pillow == true && GP_script.GetTier() > 2)
+        {
+            Pillow.transform.Translate((GameObject.Find("Throw_Target")).transform.localPosition);
+        }
 
-            if (Input.GetKeyDown(KeyCode.E) && sinkon == true)
-            {
-                SinkOn.SetActive(false);
-                SinkOff.SetActive(true);
-                GP_script.DeductPower();
-            }
+        if (Input.GetKeyDown(KeyCode.E) && pillow2 == true && GP_script.GetTier() > 2)
+        {
+            Pillow2.transform.Translate((GameObject.Find("Throw_Target_1")).transform.localPosition);
+        }
 
-            if (Input.GetKeyDown(KeyCode.E) && sinkoff == true)
+        if (Input.GetKeyDown(KeyCode.E) && fridge == true && GP_script.GetTier() >= 2)
+        {
+            Ai.Scared_Count++;
+            Fridge_Door.SetActive(false);
+            Fridge_Open.SetActive(true);
+            if (Ai.Scared_Count >= 9)
             {
-                SinkOff.SetActive(false);
-                SinkOn.SetActive(true);
-                GP_script.DeductPower();
+                Ai.Huddled_Corner();
             }
+        }
 
-            if (Input.GetKeyDown(KeyCode.E) && pizzaopen == true)
-            {
-                PizzaOpen.SetActive(false);
-                PizzaClose.SetActive(true);
-                GP_script.DeductPower();
-            }
+        if (Input.GetKeyDown(KeyCode.E) && open_fridge == true && GP_script.GetTier() >= 2)
+        {
+            Fridge_Open.SetActive(false);
+            Fridge_Door.SetActive(true);
+        }
 
-            if (Input.GetKeyDown(KeyCode.E) && pizzaclose == true)
+        if (Input.GetKeyDown(KeyCode.E) && sinkon == true && GP_script.GetTier() >= 1)
+        {
+            Ai.Scared_Count++;
+            SinkOn.SetActive(false);
+            SinkOff.SetActive(true);
+            if (Ai.Scared_Count >= 9)
             {
-                PizzaClose.SetActive(false);
-                PizzaOpen.SetActive(true);
-                GP_script.DeductPower();
+                Ai.Huddled_Corner();
             }
-     }
+        }
+
+        if (Input.GetKeyDown(KeyCode.E) && sinkoff == true && GP_script.GetTier() >= 1)
+        {
+            SinkOff.SetActive(false);
+            SinkOn.SetActive(true);
+        }
+
+        if (Input.GetKeyDown(KeyCode.E) && pizzaopen == true && GP_script.GetTier() > 1)
+        {
+            Ai.Scared_Count++;
+            PizzaOpen.SetActive(false);
+            PizzaClose.SetActive(true);
+            if (Ai.Scared_Count >= 9)
+            {
+                Ai.Huddled_Corner();
+            }
+        }
+
+        if (Input.GetKeyDown(KeyCode.E) && pizzaclose == true && GP_script.GetTier() > 1)
+        {
+            PizzaClose.SetActive(false);
+            PizzaOpen.SetActive(true);
+        }
     }
 
     private void OnTriggerEnter2D(Collider2D other)
@@ -260,6 +325,11 @@ public class Sensor : MonoBehaviour
         {
             Debug.Log("Item Found");
             T_Mesh.text = "Press E";
+
+            if (other.gameObject == Computer)
+            {
+                Comp = true;
+            }
 
             if (other.gameObject == Door)
             {
@@ -389,6 +459,7 @@ public class Sensor : MonoBehaviour
         pizzaclose = false;
         cup = false;
         noodles = false;
+        Comp = false;
     }
     IEnumerator DelayThrow(GameObject gp)
     {
@@ -403,8 +474,18 @@ public class Sensor : MonoBehaviour
             gp.GetComponent<Animator>().enabled = false;
             gp.GetComponent<BoxCollider2D>().enabled = false;
             gp.transform.Translate(target.transform.localPosition);
-            GP_script.DeductPower();
         }
+        Ai.Scared_Count++;
+
+        if(Ai.Scared_Count < 4)
+        {
+            Ai.Frightened();
+        }
+        else
+        {
+            Ai.Real_Frightened();
+        }
+
         yield break;
     }
 }
